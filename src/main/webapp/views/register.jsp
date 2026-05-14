@@ -32,7 +32,7 @@
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" name="password" placeholder="Min. 8 characters" required>
+                <input type="password" name="password" placeholder="Min. 8 characters" minlength="8" required>
             </div>
             <button type="submit" class="btn btn-primary btn-full" style="margin-top:8px;padding:13px;">Create Account</button>
         </form>

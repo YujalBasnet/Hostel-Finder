@@ -26,6 +26,12 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
+        if (password.trim().length() < 8) {
+            request.setAttribute("error", "Password must be at least 8 characters long.");
+            request.getRequestDispatcher("/views/register.jsp").forward(request, response);
+            return;
+        }
+
         UserDAO dao = new UserDAO();
         if (dao.emailExists(email)) {
             request.setAttribute("error", "Email already registered. Please login.");
