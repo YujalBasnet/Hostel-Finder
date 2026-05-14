@@ -1,17 +1,19 @@
 package com.hostell.hostel_finder.controller;
 
-import com.hostell.hostel_finder.dao.HostelDAO;
-import com.hostell.hostel_finder.model.Hostel;
+import com.hostell.hostel_finder.dao.BookingDAO;
+import com.hostell.hostel_finder.model.Booking;
 import com.hostell.hostel_finder.model.User;
-
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/admin/hostels")
-public class AdminHostelServlet extends HttpServlet {
+@WebServlet("/admin/bookings")
+public class AdminBookingsServlet extends HttpServlet {
 
     private User getSessionUser(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -25,35 +27,28 @@ public class AdminHostelServlet extends HttpServlet {
         return user != null && "admin".equalsIgnoreCase(user.getRole());
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         User user = getSessionUser(request);
-        if (user == null) {
-            response.sendRedirect(request.getContextPath() + "/views/login.jsp");
-            return;
-        }
         if (!isAdmin(user)) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
 
-        HostelDAO dao = new HostelDAO();
-        List<Hostel> pendingHostels = dao.getPendingHostels();
-        request.setAttribute("pendingHostels", pendingHostels);
+        BookingDAO dao = new BookingDAO();
+        List<Booking> bookings = dao.getAllBookings();
+        request.setAttribute("bookings", bookings);
 
-        request.getRequestDispatcher("/views/admin_dashboard.jsp")
-                .forward(request, response);
+        request.getRequestDispatcher("/views/admin_bookings.jsp").forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         User user = getSessionUser(request);
-        if (user == null) {
-            response.sendRedirect(request.getContextPath() + "/views/login.jsp");
-            return;
-        }
         if (!isAdmin(user)) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
@@ -72,16 +67,17 @@ public class AdminHostelServlet extends HttpServlet {
         if (statusToSet != null && idParam != null) {
             try {
                 int id = Integer.parseInt(idParam);
-                HostelDAO dao = new HostelDAO();
-                boolean ok = dao.updateHostelStatus(id, statusToSet);
+                BookingDAO dao = new BookingDAO();
+                boolean ok = dao.updateBookingStatus(id, statusToSet);
                 String statusLabel = ok ? "success" : "error";
-                response.sendRedirect(request.getContextPath() + "/admin/hostels?updated=" + statusLabel + "&action=" + statusToSet);
+                response.sendRedirect(request.getContextPath() + "/admin/bookings?updated=" + statusLabel + "&action=" + statusToSet);
                 return;
             } catch (NumberFormatException ignored) {
                 // Ignore invalid ids to avoid breaking the admin flow.
             }
         }
 
-        response.sendRedirect(request.getContextPath() + "/admin/hostels?updated=error");
+        response.sendRedirect(request.getContextPath() + "/admin/bookings?updated=error");
     }
 }
+

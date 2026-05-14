@@ -27,6 +27,22 @@ public class UserDAO {
         }
     }
 
+    public boolean emailExists(String email) {
+        String sql = "SELECT 1 FROM users WHERE email=?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public User loginUser(String email, String password) {
         User user = null;
         String sql = "SELECT * FROM users WHERE email=?";

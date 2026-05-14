@@ -1,3 +1,3 @@
 <%
-    response.sendRedirect(request.getContextPath() + "/views/register.jsp");
+    response.sendRedirect(request.getContextPath() + "/views/home.jsp");
 %>

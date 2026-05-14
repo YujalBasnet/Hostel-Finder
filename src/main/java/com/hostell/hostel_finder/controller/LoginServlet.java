@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 
             String role = user.getRole();
             if (role != null && role.equalsIgnoreCase("admin")) {
-                response.sendRedirect(request.getContextPath() + "/views/admin_dashboard.jsp");
+                response.sendRedirect(request.getContextPath() + "/admin/hostels");
             } else {
                 response.sendRedirect(request.getContextPath() + "/views/home.jsp");
             }

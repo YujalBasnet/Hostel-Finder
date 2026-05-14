@@ -6,6 +6,8 @@ public class Hostel {
     private String location;
     private double price;
     private String facilities;
+    private String status;
+    private String image;
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -23,4 +25,26 @@ public class Hostel {
 
     public String getFacilities() { return facilities; }
     public void setFacilities(String facilities) { this.facilities = facilities; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    // Backward-compatible aliases for image path usage in servlets/JSPs.
+    public String getImagePath() {
+        return image;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.image = imagePath;
+    }
 }
