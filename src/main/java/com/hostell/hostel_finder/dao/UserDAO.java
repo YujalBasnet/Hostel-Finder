@@ -5,6 +5,8 @@ import com.hostell.hostel_finder.util.PasswordUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
@@ -61,6 +63,7 @@ public class UserDAO {
                         user.setName(rs.getString("name"));
                         user.setEmail(rs.getString("email"));
                         user.setRole(rs.getString("role"));
+                        user.setSuspendedUntil(rs.getTimestamp("suspended_until"));
                     }
                 }
             }
@@ -69,5 +72,44 @@ public class UserDAO {
         }
 
         return user;
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT id, name, email, role, suspended_until FROM users WHERE role IS NULL OR LOWER(TRIM(role)) = 'user' ORDER BY id DESC";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                user.setRole(rs.getString("role"));
+                user.setSuspendedUntil(rs.getTimestamp("suspended_until"));
+                users.add(user);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
+    public boolean updateSuspendedUntil(int userId, java.sql.Timestamp suspendedUntil) {
+        String sql = "UPDATE users SET suspended_until = ? WHERE id = ? AND (role IS NULL OR LOWER(TRIM(role)) = 'user')";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setTimestamp(1, suspendedUntil);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
