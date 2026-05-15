@@ -1,11 +1,14 @@
 package com.hostell.hostel_finder.model;
 
+import java.sql.Timestamp;
+
 public class User {
     private int id;
     private String name;
     private String email;
     private String password;
     private String role;
+    private Timestamp suspendedUntil;
 
     // Getters and Setters
     public int getId() { return id; }
@@ -22,4 +25,7 @@ public class User {
 
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
+
+    public Timestamp getSuspendedUntil() { return suspendedUntil; }
+    public void setSuspendedUntil(Timestamp suspendedUntil) { this.suspendedUntil = suspendedUntil; }
 }
