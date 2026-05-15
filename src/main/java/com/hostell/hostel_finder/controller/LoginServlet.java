@@ -7,6 +7,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -21,6 +22,13 @@ public class LoginServlet extends HttpServlet {
         User user = dao.loginUser(email, password);
 
         if (user != null) {
+            if (user.getSuspendedUntil() != null && user.getSuspendedUntil().after(new java.util.Date())) {
+                SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                request.setAttribute("error", "Account suspended until " + fmt.format(user.getSuspendedUntil()) + ".");
+                request.getRequestDispatcher("/views/login.jsp").forward(request, response);
+                return;
+            }
+
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
 
