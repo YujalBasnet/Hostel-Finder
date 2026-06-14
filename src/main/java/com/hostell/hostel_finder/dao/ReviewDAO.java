@@ -14,7 +14,6 @@ public class ReviewDAO {
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setInt(1, userId);
             ps.setInt(2, hostelId);
             ps.setInt(3, rating);
@@ -26,7 +25,6 @@ public class ReviewDAO {
         }
         return false;
     }
-
     public List<Review> getReviewsByHostel(int hostelId) {
         List<Review> list = new ArrayList<>();
         String sql = "SELECT r.id, r.user_id, r.hostel_id, r.rating, r.review_text, r.created_at, " +
@@ -38,7 +36,6 @@ public class ReviewDAO {
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setInt(1, hostelId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -58,7 +55,6 @@ public class ReviewDAO {
         }
         return list;
     }
-
     public List<Review> getReviewsByUser(int userId) {
         List<Review> list = new ArrayList<>();
         String sql = "SELECT r.id, r.user_id, r.hostel_id, r.rating, r.review_text, r.created_at, " +
@@ -70,7 +66,6 @@ public class ReviewDAO {
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setInt(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -90,7 +85,6 @@ public class ReviewDAO {
         }
         return list;
     }
-
     public double getAverageRating(int hostelId) {
         String sql = "SELECT AVG(rating) as avg_rating FROM reviews WHERE hostel_id = ?";
 
@@ -108,13 +102,11 @@ public class ReviewDAO {
         }
         return 0.0;
     }
-
     public boolean userHasBookingForHostel(int userId, int hostelId) {
         String sql = "SELECT 1 FROM bookings WHERE user_id = ? AND hostel_id = ? AND status != 'rejected'";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setInt(1, userId);
             ps.setInt(2, hostelId);
             try (ResultSet rs = ps.executeQuery()) {
@@ -125,13 +117,11 @@ public class ReviewDAO {
         }
         return false;
     }
-
     public boolean userHasAlreadyReviewed(int userId, int hostelId) {
         String sql = "SELECT 1 FROM reviews WHERE user_id = ? AND hostel_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setInt(1, userId);
             ps.setInt(2, hostelId);
             try (ResultSet rs = ps.executeQuery()) {

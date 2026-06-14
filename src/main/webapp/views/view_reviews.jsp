@@ -134,7 +134,7 @@
                         <%
                             double rating = averageRating;
                             for (int i = 0; i < 5; i++) {
-                                out.print(i < Math.round(rating) ? "⭐" : "☆");
+                                System.out.print(i < Math.round(rating) ? "⭐" : "☆");
                             }
                         %>
                     </div>
@@ -169,14 +169,14 @@
         <div class="empty-state" style="margin-top: 40px;">
             <div style="font-size: 2.5rem; margin-bottom: 12px;">⭐</div>
             <h3>No reviews yet</h3>
-            <p>Be the first to review this hostel!</p>
+            <p>Be the first to review this hostel!!!</p>
             <a href="<%= request.getContextPath() %>/views/submit_review.jsp?hostelId=<%= hostelId %>" class="btn btn-primary" style="margin-top: 20px;">Write a Review</a>
         </div>
         <% } %>
         <% } else { %>
         <div class="empty-state">
             <div style="font-size: 2.5rem; margin-bottom: 12px;">❌</div>
-            <h3>Hostel not found</h3>
+            <h3>HOSTEL NOT FOUND</h3>
             <p>We couldn't find the hostel you're looking for.</p>
             <a href="<%= request.getContextPath() %>/views/home.jsp" class="btn btn-primary" style="margin-top: 20px;">Back to Home</a>
         </div>
