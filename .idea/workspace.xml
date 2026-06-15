@@ -9,12 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cb3375b-19eb-4c09-8ef6-c0224156ed1b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hostell/hostel_finder/dao/ReviewDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hostell/hostel_finder/dao/ReviewDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/home.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/home.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/view_reviews.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/view_reviews.jsp" afterDir="false" />
-    </list>
+    <list default="true" id="8cb3375b-19eb-4c09-8ef6-c0224156ed1b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -185,6 +180,7 @@
       <workItem from="1779295232118" duration="2795000" />
       <workItem from="1779804652503" duration="1002000" />
       <workItem from="1780120787696" duration="239000" />
+      <workItem from="1781507507487" duration="376000" />
     </task>
     <servers />
   </component>
