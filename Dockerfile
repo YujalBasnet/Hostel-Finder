@@ -15,6 +15,12 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 COPY --from=builder /app/target/Hostel_Finder-1.0-SNAPSHOT.war \
      /usr/local/tomcat/webapps/ROOT.war
 
+# Script to replace Tomcat's port with Railway's $PORT at startup
+RUN echo '#!/bin/bash\n\
+PORT=${PORT:-8080}\n\
+sed -i "s/port=\"8080\"/port=\"$PORT\"/" /usr/local/tomcat/conf/server.xml\n\
+exec catalina.sh run' > /usr/local/bin/start.sh && chmod +x /usr/local/bin/start.sh
+
 EXPOSE 8080
 
-CMD ["catalina.sh", "run"]
+CMD ["/usr/local/bin/start.sh"]
